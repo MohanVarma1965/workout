@@ -14,15 +14,16 @@ class MyWorkouts extends React.Component {
     }
 
     handleChange(event, i) {
+        console.log("inside the handler");
         this.setState({[i]: event.target.value})
     }
 
     render() {
 
         const listItems = this.props.listOfWorkouts.map((i) =>
-            <div>
+            <div className="workoutContainer">
                 <img className="imageContainer" src={require(`../../images/${i}.jpg`)}/>
-                <input type="text" id= {i} onChange={(event, i) => this.handleChange(event)}/>
+                <input class="workoutInputValue" type="text" id= {i} onChange={(event, i) => this.handleChange(event)}/>
             </div>
         );
 

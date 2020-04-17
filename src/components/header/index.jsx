@@ -23,10 +23,10 @@ const navItems = [
 
 const PageHeader = () => (
   <header>
-    <ul>
+    <ul className="pageHeader">
       {navItems.map(({ label, url }) => (
-        <li button key={url}>
-          <Link to={url}>
+        <li className="pageHeaderList" button key={url}>
+          <Link className="headerLink" to={url}>
             <span>{label}</span>
           </Link>
         </li>
