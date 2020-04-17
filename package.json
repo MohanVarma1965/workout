@@ -1,15 +1,15 @@
 {
-  "name": "react-redux-firebase-boilerplate",
-  "description": "React, Redux and Google Firebase boilerplate.",
+  "name": "Workout",
+  "description": "React, Redux and Google's Firebase ",
   "author": {
-    "name": "Jared Williams",
-    "email": "accounts@jaredwilliams.com.au"
+    "name": "Mohan Varma",
+    "email": "mohanvarma.k@gmail.com"
   },
   "repository": {
-    "url": "https://github.com/imagitama/react-redux-firebase-boilerplate",
+    "url": "https://github.com/MohanVarma1965/workout.git",
     "type": "git"
   },
-  "homepage": "https://github.com/imagitama/react-redux-firebase-boilerplate",
+  "homepage": "https://github.com/MohanVarma1965/workout.git",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
