@@ -7,9 +7,11 @@ const DidDoSomething = ({ didDoSomething }) => (
 
 const HomeContainer = ({ auth, didDoSomething }) => {
   if (auth.uid) {
+    console.log("before aut");
+    console.log(auth);
     return (
       <div>
-        You are logged in. <DidDoSomething didDoSomething={didDoSomething} />
+        {auth.displayName} Lets Rock !!! <DidDoSomething didDoSomething={didDoSomething} />
       </div>
     )
   }
