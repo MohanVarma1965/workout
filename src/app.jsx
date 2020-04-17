@@ -4,11 +4,11 @@ import PageHeader from './components/header'
 import PageFooter from './components/footer'
 import * as routes from './routes'
 import * as containers from './containers'
-
+import './App.css';
 const App = () => (
-  <>
+  < div className="">
     <PageHeader />
-    <main className="main">
+    <main className="App">
       <Switch>
         <Route exact path={routes.login} component={containers.login} />
         <Route exact path={routes.logout} component={containers.logout} />
@@ -18,7 +18,7 @@ const App = () => (
       </Switch>
     </main>
     <PageFooter />
-  </>
+  </div>
 )
 
 export default App

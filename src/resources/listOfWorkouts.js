@@ -1,3 +1,4 @@
+/*
 const listOfWorkouts = [
     {image: "plank.jpg", name: "plank"},
     {image: "pushUp.jpg", name: "pushUp"},
@@ -6,6 +7,18 @@ const listOfWorkouts = [
     {image: "squats.jpg", name: "squats"},
     {image: "toeTouch.jpg", name: "toeTouch"},
     {image: "wallSit.jpg", name: "wallSit"},
+];
+*/
+
+
+const listOfWorkouts = [
+    "plank",
+    "pushUp",
+    "sidePlank",
+    "sidePlankRise",
+    "squats",
+    "toeTouch",
+    "wallSit",
 ];
 
 export default listOfWorkouts;

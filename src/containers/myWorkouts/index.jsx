@@ -9,26 +9,26 @@ class MyWorkouts extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            listOfWorkouts : []
+            listOfWorkouts: []
         }
     }
 
-    handleChange(event) {
-        this.setState({[event.target.id]: event.target.value})
+    handleChange(event, i) {
+        this.setState({[i]: event.target.value})
     }
 
     render() {
-        return (
-            <div className="mainContainer">
-                {/* <div className="workoutContainer">
-            <img className="imageContainer" src={require('../../images/pushUp.jpg')}/>
-            <input type="text" onChange={(event) => this.handleChange(event)} value={this.state.pushUp}
-                   id="pushUp"/>
-          </div>  */}
 
-          this is in main section
+        const listItems = this.props.listOfWorkouts.map((i) =>
+            <div>
+                <img className="imageContainer" src={require(`../../images/${i}.jpg`)}/>
+                <input type="text" id= {i} onChange={(event, i) => this.handleChange(event)}/>
             </div>
-        )
+        );
+
+        return <div className="mainContainer">
+                  {listItems}
+        </div>
 
     }
 }

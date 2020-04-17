@@ -1,7 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import listOfWorkouts from '../../resources/listOfWorkouts';
-import MyWorkouts from '../myWorkouts/index'
+import MyWorkouts from '../myWorkouts/index';
+import '../../App.css';
+
 /*
 const DidDoSomething = ({ didDoSomething }) => (
   <span>{didDoSomething ? 'Did do something' : 'Did not do something'}</span>
