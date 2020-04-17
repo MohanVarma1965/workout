@@ -63,6 +63,7 @@ body {
 .mainContainer {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .workoutContainer {
@@ -74,6 +75,7 @@ body {
 
 .imageContainer {
     height: 150px;
+    border-radius: 10px;
 }
 
 
@@ -99,4 +101,5 @@ body {
     text-align: center;
     background: black;
     color: white;
+    border-radius: 10px;
 }
