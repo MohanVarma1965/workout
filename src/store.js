@@ -4,10 +4,12 @@ import thunk from 'redux-thunk'
 import createHistory from 'history/createBrowserHistory'
 import rootReducer from './ducks'
 import { middleware as analyticsMiddleware } from './analytics'
+import initialState from "./ducks/app/initialState";
+
 
 export const history = createHistory()
 
-const initialState = {}
+
 const enhancers = []
 const middleware = [thunk, routerMiddleware(history), analyticsMiddleware]
 
@@ -26,6 +28,6 @@ const composedEnhancers = compose(
 
 export default createStore(
   connectRouter(history)(rootReducer),
-  initialState,
+    {...initialState},
   composedEnhancers
 )

@@ -2,6 +2,7 @@ import firebaseTrigger from '../../firebaseTrigger';
 
 
 export const DO_SOMETHING = 'DO_SOMETHING'
+
 /*export const doSomething = someVar => ({
     type: DO_SOMETHING,
     payload: {
@@ -16,18 +17,25 @@ export function submitLog(workoutLog) {
         dispatch({
             type: DO_SOMETHING,
             payload: {
-                val: "val"
+                val: "val"l
             }
         })*/
 
+    return (dispatch) => {
         return firebaseTrigger.submitLog(workoutLog)
             .then((result) => {
                 //dispatch(notify('Your quiz has been submitted successfully'));
-                //dispatch(push('/login'));
+                dispatch({
+                    type: "USER_LOGGED",
+                    payload: {
+                        val: "val"
+                    }
+                });
             })
             .catch(error => {
                 // dispatch(loginCallError(error));
-                // console.log(error);
+                console.log(error);
             });
-    };
+    }
+}
 

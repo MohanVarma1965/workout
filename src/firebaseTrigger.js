@@ -33,11 +33,12 @@ class FirebaseTrigger {
 
         console.log("Inside the submit log");
         console.log(user);
+        console.log(user.email);
 
         return new Promise((resolve, reject) => {
             firebase
                 .database()
-                .ref(user).set(workoutLog, (error) => {
+                .ref("users").child(user.uid).set(workoutLog, (error) => {
                     if (error) {
                         console.log("error");
                         console.log(error);

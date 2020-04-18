@@ -42,7 +42,9 @@ class MyWorkouts extends React.Component {
         console.log(this.props);
 
         return (
-            <form className="mainContainer" onSubmit={(event)=> {this.submitworkOut(event)}}>
+            <form className="mainContainer" onSubmit={(event) => {this.submitworkOut(event)}}>
+                <div>{this.props.didDoSomething}</div>
+
                 <div className="workoutContainer">
                     <img className="imageContainer" src={require('../../images/pushUp.jpg')}/>
                     <input type="text" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
@@ -94,7 +96,7 @@ class MyWorkouts extends React.Component {
                 </div>
 
                 <div className="workoutContainer buttonContainer">
-                    <input type="submit" class="logWorkButton" value="Log Work" />
+                    <input type="submit" class="logWorkButton" value="Log Work"/>
                 </div>
 
             </form>
@@ -102,7 +104,7 @@ class MyWorkouts extends React.Component {
     }
 }
 
-const  mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
     return {
         actions: bindActionCreators({
             submitLog
@@ -110,7 +112,17 @@ const  mapDispatchToProps = (dispatch) => {
     };
 }
 
-const mapStateToProps = ({firebase: {auth}}) => ({auth})
+//const mapStateToProps = ({firebase: {auth}}) => ({auth})
+
+
+const mapStateToProps = (state) => {
+    console.log("inside the state");
+    console.log(state)
+    return {
+        didDoSomething: state.app.didDoSomething
+    };
+}
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRedirectOnNotAuth(MyWorkouts))
 

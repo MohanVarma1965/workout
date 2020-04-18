@@ -1,19 +1,18 @@
-import { DO_SOMETHING } from './actions'
+import {DO_SOMETHING} from './actions'
 //import {submitLog} from './actions'
 
-const initialState = {
-  didDoSomething: false
-}
+import initialState from "./initialState";
 
 export default (state = initialState, action) => {
-  switch (action.type) {
-    case DO_SOMETHING:
-      return {
-        ...state,
-        didDoSomething: true
-      }
-
-    default:
-      return state
-  }
+    if (action.type === "USER_LOGGED") {
+        return {
+            ...state,
+            didDoSomething: "true"
+        }
+    } else {
+        return initialState
+    }
 }
+
+
+
