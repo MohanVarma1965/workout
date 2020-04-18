@@ -1,5 +1,5 @@
-import { combineReducers } from 'redux'
-import { firebaseReducer } from 'react-redux-firebase'
+import {combineReducers} from 'redux'
+import {firebaseReducer} from 'react-redux-firebase'
 import app from './app/reducer'
 // import { metaReducer as analyticsMetaReducer } from '../analytics'
 
@@ -9,9 +9,9 @@ import app from './app/reducer'
   firebase: firebaseReducer
 })*/
 
-const rootReducer = combineReducers( {
-  app,
-  firebase: firebaseReducer
+const rootReducer = combineReducers({
+        app,
+        firebase: firebaseReducer
     }
 )
 

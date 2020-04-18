@@ -1,4 +1,3 @@
-
 import * as firebase from 'firebase';
 import {config} from './firebase';
 
@@ -22,62 +21,83 @@ class FirebaseTrigger {
         return firebase.auth;
     }
 
-
     static authSignOut() {
         return firebase.auth().signOut();
     }
 
     static submitLog(workoutLog) {
 
-        let user = firebase.auth().currentUser;
+        const addLogs = (previousLog, workoutLog) => {
+            return previousLog.map((i) => {
+                return previousLog[i] + workoutLog[i]
+            })
+        }
 
+        let user = firebase.auth().currentUser;
+        let workoutLogUpdated = [...workoutLog];
         console.log("Inside the submit log");
         console.log(user);
         console.log(user.email);
+        let previousLog = "";
+        let f = "";
+
+ /*       if (user && user.uid) {
+
+            const promise1 = new Promise((resolve, reject) => {
+                firebase
+                    .database()
+                    .ref(`users/${user.uid}`)
+                    .on('value', function (snapshot) {
+                        let resolvedValues = [];
+                        resolvedValues.push(snapshot.val());
+
+                        resolve(resolvedValues).then((va) => {
+                            console.log("resolved values");
+
+                            console.log(va);
+                        });
+
+                    });
+            });
+
+
+            previousLog = promise1.then(function (value) {
+                return value
+            })
+
+            console.log("previousLog");
+            console.log(previousLog);
+
+            workoutLogUpdated = addLogs(previousLog, workoutLog);
+        }*/
 
         return new Promise((resolve, reject) => {
             firebase
                 .database()
-                .ref("users").child(user.uid).set(workoutLog, (error) => {
-                    if (error) {
-                        console.log("error");
-                        console.log(error);
-                        reject(error);
-                    } else {
-                        console.log("data set correctly");
-                        resolve("success");
-                    }
-                });
+                .ref("users").child(user.uid).update(workoutLog, (error) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    console.log("data set correctly");
+                    resolve("success");
+                }
+            });
         });
     }
 
- /*   static createRoom(classRoom) {
+    static getPreviousLogs(workoutLog) {
         let user = firebase.auth().currentUser;
-        let valuemod = {
-            RoomValue: classRoom,
-            owner: user.uid,
-            saved: false,
-            hosted: false,
-            endHostedQuiz: false,
-            questions: [],
-            studentIDs: []
-        };
-
+        console.log(user);
         return new Promise((resolve, reject) => {
-            firebase
-                .database()
-                .ref('users/classRooms').child(classRoom)
-                .set(valuemod, (error) => {
-                    if (error) {
-                        // console.log(error);
-                        reject(error);
-                    } else {
-                        resolve(classRoom);
-                    }
+            firebase.database().ref(`users/${user.uid}`)
+                .on('value', function (snapshot) {
+                    let resolvedValues = [];
+                    resolvedValues.push(snapshot.val());
+                    resolve(resolvedValues)
                 });
-        });
-    }*/
+        })
+    }
 }
-
 export default FirebaseTrigger;
+
 

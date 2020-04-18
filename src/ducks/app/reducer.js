@@ -9,6 +9,11 @@ export default (state = initialState, action) => {
             ...state,
             didDoSomething: "true"
         }
+    }
+    if (action.type === "PREVIOUS_LOGS") {
+        return Object.assign({}, state, {
+             previousLogs: action.payload.previousLogs
+        });
     } else {
         return initialState
     }

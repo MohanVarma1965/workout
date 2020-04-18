@@ -4,7 +4,7 @@ import withRedirectOnNotAuth from '../../hocs/withRedirectOnNotAuth'
 
 
 import {bindActionCreators} from 'redux';
-import {submitLog} from '../../ducks/app/actions';
+import {submitLog, getPreviousLogs} from '../../ducks/app/actions';
 
 /*const MyAccountContainer = ({ auth }) => <div>Hello, {auth}!</div>*/
 
@@ -22,6 +22,10 @@ class MyWorkouts extends React.Component {
             "wallSit": 0
         }
         this.submitworkOut = this.submitworkOut.bind(this);
+    }
+
+    componentDidMount() {
+        this.props.actions.getPreviousLogs();
     }
 
 
@@ -43,8 +47,8 @@ class MyWorkouts extends React.Component {
 
         return (
             <form className="mainContainer" onSubmit={(event) => {this.submitworkOut(event)}}>
-                <div>{this.props.didDoSomething}</div>
 
+                <div>{this.props.previousLogs}</div>
                 <div className="workoutContainer">
                     <img className="imageContainer" src={require('../../images/pushUp.jpg')}/>
                     <input type="text" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
@@ -107,7 +111,8 @@ class MyWorkouts extends React.Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         actions: bindActionCreators({
-            submitLog
+            submitLog,
+            getPreviousLogs
         }, dispatch)
     };
 }
@@ -119,7 +124,8 @@ const mapStateToProps = (state) => {
     console.log("inside the state");
     console.log(state)
     return {
-        didDoSomething: state.app.didDoSomething
+        didDoSomething: state.app.didDoSomething,
+        previousLogs: state.app.previousLogs
     };
 }
 
