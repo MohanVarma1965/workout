@@ -1,4 +1,5 @@
 import { DO_SOMETHING } from './actions'
+//import {submitLog} from './actions'
 
 const initialState = {
   didDoSomething: false

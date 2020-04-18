@@ -7,11 +7,11 @@ const navItems = [
     label: 'Home',
     url: routes.home
   },
-  {
+  /*{
     label: 'My Account',
     url: routes.myAccount
   },
-  {
+*/  {
     label: 'Login',
     url: routes.login
   },
