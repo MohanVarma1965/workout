@@ -1,20 +1,11 @@
 import firebaseTrigger from '../../firebaseTrigger';
-
-
 export const DO_SOMETHING = 'DO_SOMETHING'
 
-/*export const doSomething = someVar => ({
-    type: DO_SOMETHING,
-    payload: {
-        someVar
-    }
-})*/
 
-
-export function submitLog(workoutLog) {
+export function submitLog(workoutLog, previousLogs) {
 
     return (dispatch) => {
-        return firebaseTrigger.submitLog(workoutLog)
+        return firebaseTrigger.submitLog(workoutLog, previousLogs)
             .then((result) => {
                 //dispatch(notify('Your quiz has been submitted successfully'));
                 dispatch({

@@ -17,20 +17,20 @@ class FirebaseTrigger {
         });
     }
 
-    static auth() {
-        return firebase.auth;
-    }
+    static submitLog(workoutLog, previousLogs) {
 
-    static authSignOut() {
-        return firebase.auth().signOut();
-    }
+        const addLogs = () => {
 
-    static submitLog(workoutLog) {
+            if(previousLogs && previousLogs[0]) {
+                let sum = workoutLogUpdated.map((num, i) => {
+                    return  parseInt(num) + parseInt(previousLogs[0][i])
+                })
 
-        const addLogs = (previousLog, workoutLog) => {
-            return previousLog.map((i) => {
-                return previousLog[i] + workoutLog[i]
-            })
+                return sum;
+            }
+            else {
+                return workoutLog
+            }
         }
 
         let user = firebase.auth().currentUser;
@@ -38,43 +38,14 @@ class FirebaseTrigger {
         console.log("Inside the submit log");
         console.log(user);
         console.log(user.email);
-        let previousLog = "";
-        let f = "";
 
- /*       if (user && user.uid) {
+        let finalLogs = addLogs();
 
-            const promise1 = new Promise((resolve, reject) => {
-                firebase
-                    .database()
-                    .ref(`users/${user.uid}`)
-                    .on('value', function (snapshot) {
-                        let resolvedValues = [];
-                        resolvedValues.push(snapshot.val());
-
-                        resolve(resolvedValues).then((va) => {
-                            console.log("resolved values");
-
-                            console.log(va);
-                        });
-
-                    });
-            });
-
-
-            previousLog = promise1.then(function (value) {
-                return value
-            })
-
-            console.log("previousLog");
-            console.log(previousLog);
-
-            workoutLogUpdated = addLogs(previousLog, workoutLog);
-        }*/
 
         return new Promise((resolve, reject) => {
             firebase
                 .database()
-                .ref("users").child(user.uid).update(workoutLog, (error) => {
+                .ref("users").child(user.uid).update(finalLogs, (error) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -100,4 +71,14 @@ class FirebaseTrigger {
 }
 export default FirebaseTrigger;
 
+/*
+
+static auth() {
+    return firebase.auth;
+}
+
+static authSignOut() {
+    return firebase.auth().signOut();
+}
+*/
 

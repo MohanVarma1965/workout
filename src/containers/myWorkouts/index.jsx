@@ -1,6 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import withRedirectOnNotAuth from '../../hocs/withRedirectOnNotAuth'
+import withRedirectOnNotAuth from '../../hocs/withRedirectOnNotAuth';
+import {CircularProgressbar} from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 
 import {bindActionCreators} from 'redux';
@@ -19,9 +21,11 @@ class MyWorkouts extends React.Component {
             "sidePlankRise": 0,
             "squats": 0,
             "toeTouch": 0,
-            "wallSit": 0
+            "wallSit": 0,
+            "progress": 0
         }
         this.submitworkOut = this.submitworkOut.bind(this);
+        //this.calculateProgress = this.calculateProgress.bind(this);
     }
 
     componentDidMount() {
@@ -35,20 +39,42 @@ class MyWorkouts extends React.Component {
 
     submitworkOut(event) {
         event.preventDefault();
-        let logArray = [this.state.plank, this.state.pushUp, this.state.sidePlank, this.state.sidePlankRise,
+        let logArray = [this.state.pushUp, this.state.plank, this.state.sidePlank, this.state.sidePlankRise,
             this.state.squats, this.state.toeTouch, this.state.wallSit];
-        this.props.actions.submitLog(logArray);
+
+        if (Array.isArray(this.props.previousLogs)) {
+            this.props.actions.submitLog(logArray, this.props.previousLogs);
+        } else {
+            this.props.actions.submitLog(logArray);
+        }
     }
 
+
     render() {
+
+        let progressL = 0;
+        const calculateProgress = () => {
+
+            if (this.props.previousLogs && Array.isArray(this.props.previousLogs) && this.props.previousLogs[0]) {
+                this.props.previousLogs.map((num) => {
+                    progressL = parseInt(progressL) + parseInt(num);
+                })
+                // this.setState({progress: progressL })
+            }
+            return progressL
+
+        }
 
         console.log("inside the render of my workouts");
         console.log(this.props);
 
         return (
-            <form className="mainContainer" onSubmit={(event) => {this.submitworkOut(event)}}>
-
-                <div>{this.props.previousLogs}</div>
+            <form className="mainContainer" onSubmit={(event) => {
+                this.submitworkOut(event)
+            }}>
+                 {calculateProgress()}
+                <CircularProgressbar value={progressL} maxValue={1000}
+                                     text={`${progressL}/1000`}/>;
                 <div className="workoutContainer">
                     <img className="imageContainer" src={require('../../images/pushUp.jpg')}/>
                     <input type="text" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
