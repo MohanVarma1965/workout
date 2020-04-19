@@ -8,9 +8,6 @@ import 'react-circular-progressbar/dist/styles.css';
 import {bindActionCreators} from 'redux';
 import {submitLog, getPreviousLogs} from '../../ducks/app/actions';
 
-/*const MyAccountContainer = ({ auth }) => <div>Hello, {auth}!</div>*/
-
-
 class MyWorkouts extends React.Component {
     constructor(props) {
         super(props);
@@ -25,7 +22,6 @@ class MyWorkouts extends React.Component {
             "progress": 0
         }
         this.submitworkOut = this.submitworkOut.bind(this);
-        //this.calculateProgress = this.calculateProgress.bind(this);
     }
 
     componentDidMount() {
@@ -51,15 +47,12 @@ class MyWorkouts extends React.Component {
 
 
     render() {
-
         let progressL = 0;
         const calculateProgress = () => {
-
-            if (this.props.previousLogs && Array.isArray(this.props.previousLogs) && this.props.previousLogs[0]) {
-                this.props.previousLogs.map((num) => {
-                    progressL = parseInt(progressL) + parseInt(num);
-                })
-                // this.setState({progress: progressL })
+            let prevLogs = [...this.props.previousLogs]
+            if (prevLogs && Array.isArray(prevLogs) && prevLogs[0] && prevLogs[0].length == 7) {
+                const arrSum = arr => arr.reduce((a, b) => parseInt(a) + parseInt(b), 0)
+                progressL = arrSum(prevLogs[0]);
             }
             return progressL
 
@@ -72,9 +65,11 @@ class MyWorkouts extends React.Component {
             <form className="mainContainer" onSubmit={(event) => {
                 this.submitworkOut(event)
             }}>
-                 {calculateProgress()}
-                <CircularProgressbar value={progressL} maxValue={1000}
-                                     text={`${progressL}/1000`}/>;
+                {calculateProgress()}
+
+                <div className="workoutContainer progress">
+                    <CircularProgressbar value={progressL} maxValue={100}
+                                         text={`${progressL}/100`}/></div>
                 <div className="workoutContainer">
                     <img className="imageContainer" src={require('../../images/pushUp.jpg')}/>
                     <input type="text" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
