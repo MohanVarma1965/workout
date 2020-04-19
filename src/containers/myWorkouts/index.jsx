@@ -56,7 +56,7 @@ class MyWorkouts extends React.Component {
             let prevLogs = [...this.props.previousLogs]
             if (prevLogs && Array.isArray(prevLogs) && prevLogs[0] && prevLogs[0].length == 7) {
                 const arrSum = arr => arr.reduce((a, b) => parseInt(a) + parseInt(b), 0)
-                progressL = arrSum(prevLogs[0]);
+                progressL = arrSum(prevLogs[0])/10;
             }
             return progressL
 
@@ -73,55 +73,63 @@ class MyWorkouts extends React.Component {
 
                 <div className="workoutContainer progress">
                     <CircularProgressbar value={progressL} maxValue={100}
-                                         text={`${progressL}/100`}/></div>
+                                         text={`${progressL}%`}/></div>
                 <div className="workoutContainer">
                     <img className="imageContainer" src={require('../../images/pushUp.jpg')}/>
-                    <input type="text" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
+                    <input type="number" min="0" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
                            value={this.state.pushUp}
                            id="pushUp"/>
+                    <label for="pushUp"> Total Pushups</label>
                 </div>
 
                 <div className="workoutContainer">
                     <img className="imageContainer" src={require('../../images/plank.jpg')}/>
-                    <input type="text" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
+                    <input type="number" min="0" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
                            value={this.state.plank}
                            id="plank"/>
+                    <label for="plank"> Minutes </label>
                 </div>
 
 
                 <div className="workoutContainer">
                     <img className="imageContainer" src={require('../../images/sidePlank.jpg')}/>
-                    <input type="text" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
+                    <input type="number" min="0" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
                            value={this.state.sidePlank}
                            id="sidePlank"/>
+                    <label for="sidePlank"> Minutes</label>
+
                 </div>
 
                 <div className="workoutContainer">
                     <img className="imageContainer" src={require('../../images/sidePlankRise.jpg')}/>
-                    <input type="text" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
+                    <input type="number" min="0" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
                            value={this.state.sidePlankRise}
                            id="sidePlankRise"/>
+                    <label for="sidePlankRise"> Minutes</label>
                 </div>
 
                 <div className="workoutContainer">
                     <img className="imageContainer" src={require('../../images/squats.jpg')}/>
-                    <input type="text" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
+                    <input type="number" min="0" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
                            value={this.state.squats}
                            id="squats"/>
+                    <label htmlFor="squats"> Total squats</label>
                 </div>
 
                 <div className="workoutContainer">
                     <img className="imageContainer" src={require('../../images/toeTouch.jpg')}/>
-                    <input type="text" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
+                    <input type="number" min="0" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
                            value={this.state.toeTouch}
                            id="toeTouch"/>
+                    <label htmlFor="toeTouch"> Total Toe touches</label>
                 </div>
 
                 <div className="workoutContainer">
                     <img className="imageContainer" src={require('../../images/wallSit.jpg')}/>
-                    <input type="text" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
+                    <input type="number" min="0" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
                            value={this.state.wallSit}
                            id="wallSit"/>
+                    <label for="wallSit"> Minutes</label>
                 </div>
 
                 <div className="workoutContainer buttonContainer">

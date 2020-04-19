@@ -6,7 +6,7 @@ import * as routes from './routes'
 import * as containers from './containers'
 import './App.css';
 const App = () => (
-  < div className="">
+  <div>
     <PageHeader />
     <main className="App">
       <Switch>
