@@ -43,6 +43,10 @@ class MyWorkouts extends React.Component {
         } else {
             this.props.actions.submitLog(logArray);
         }
+
+        this.props.actions.getPreviousLogs();
+        this.setState({plank:0,pushUp:0,sidePlank:0,sidePlankRise:0,squats:0,toeTouch:0,wallSit:0,progress:0})
+
     }
 
 
