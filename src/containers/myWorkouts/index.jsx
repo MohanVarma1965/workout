@@ -133,7 +133,7 @@ class MyWorkouts extends React.Component {
                 </div>
 
                 <div className="workoutContainer buttonContainer">
-                    <input type="submit" class="logWorkButton" value="Log Work"/>
+                    <input type="submit" class="logWorkButton" value="LOG YOUR EFFORTS"/>
                 </div>
 
             </form>
