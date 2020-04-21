@@ -21,9 +21,9 @@ class FirebaseTrigger {
 
         const addLogs = () => {
 
-            if(previousLogs && previousLogs[0]) {
+            if(previousLogs) {
                 let sum = workoutLogUpdated.map((num, i) => {
-                    return  parseInt(num) + parseInt(previousLogs[0][i])
+                    return  parseInt(num) + parseInt(previousLogs[i])
                 })
 
                 return sum;
@@ -64,6 +64,7 @@ class FirebaseTrigger {
                 .on('value', function (snapshot) {
                     let resolvedValues = [];
                     resolvedValues.push(snapshot.val());
+                    resolvedValues.push(user.displayName)
                     resolve(resolvedValues)
                 });
         })

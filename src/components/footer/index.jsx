@@ -2,7 +2,7 @@ import React from 'react'
 
 const PageFooter = () => (
   <footer>
-    <p>Copyright 2019</p>
+    <p>Copyright 2020</p>
   </footer>
 )
 

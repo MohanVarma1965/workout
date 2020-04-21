@@ -53,13 +53,14 @@ class MyWorkouts extends React.Component {
     render() {
         let progressL = 0;
         const calculateProgress = () => {
-            let prevLogs = [...this.props.previousLogs]
-            if (prevLogs && Array.isArray(prevLogs) && prevLogs[0] && prevLogs[0].length == 7) {
-                const arrSum = arr => arr.reduce((a, b) => parseInt(a) + parseInt(b), 0)
-                progressL = arrSum(prevLogs[0])/10;
+            if(Array.isArray(this.props.previousLogs)) {
+                let prevLogs = [...this.props.previousLogs]
+                if (prevLogs && Array.isArray(prevLogs) && prevLogs.length == 7) {
+                    const arrSum = arr => arr.reduce((a, b) => parseInt(a) + parseInt(b), 0)
+                    progressL = arrSum(prevLogs) / 10;
+                }
             }
             return progressL
-
         }
 
         console.log("inside the render of my workouts");
@@ -71,7 +72,10 @@ class MyWorkouts extends React.Component {
             }}>
                 {calculateProgress()}
 
+
                 <div className="workoutContainer progress">
+                    <div> {this.props.displayName} Log your workout </div>
+                    <br></br>
                     <CircularProgressbar value={progressL} maxValue={100}
                                          text={`${progressL}%`}/></div>
                 <div className="workoutContainer">
@@ -158,7 +162,8 @@ const mapStateToProps = (state) => {
     console.log(state)
     return {
         didDoSomething: state.app.didDoSomething,
-        previousLogs: state.app.previousLogs
+        previousLogs: state.app.previousLogs,
+        displayName: state.app.displayName
     };
 }
 

@@ -30,7 +30,8 @@ export function getPreviousLogs() {
                 dispatch({
                     type: "PREVIOUS_LOGS",
                     payload: {
-                        previousLogs: result
+                        previousLogs: result[0],
+                        displayName: result[1]
                     }
                 });
             })

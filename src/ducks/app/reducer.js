@@ -9,7 +9,7 @@ export default (state = initialState, action) => {
     }
     if (action.type === "PREVIOUS_LOGS") {
         return Object.assign({}, state, {
-             previousLogs: action.payload.previousLogs
+             previousLogs: action.payload.previousLogs, displayName:action.payload.displayName
         });
     } else {
         return state
