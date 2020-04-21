@@ -9,7 +9,7 @@
     "url": "https://github.com/MohanVarma1965/workout.git",
     "type": "git"
   },
-  "homepage": "https://github.com/MohanVarma1965/workout.git",
+  "homepage": "./",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
