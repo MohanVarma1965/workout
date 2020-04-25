@@ -4,7 +4,7 @@ import withRedirectOnNotAuth from '../../hocs/withRedirectOnNotAuth';
 import {CircularProgressbar} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import {bindActionCreators} from 'redux';
-import {submitLog, getPreviousLogs,getStoryBoard} from '../../ducks/app/actions';
+import {submitLog, getPreviousLogs, getStoryBoard} from '../../ducks/app/actions';
 import imageDisplayer from "../../components/imageDisplayer";
 import StoryBoard from '../StoryBoard'
 
@@ -12,7 +12,7 @@ class MyWorkouts extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-           "activeElement" : ""
+            "activeElement": ""
         }
         this.submitworkOut = this.submitworkOut.bind(this);
     }
@@ -33,13 +33,13 @@ class MyWorkouts extends React.Component {
 
     calculateFinalLogs() {
         let points = 0;
-        if(this.state.activeElement == "Light"){
-            points =2;
-        } else if(this.state.activeElement == "Medium") {
+        if (this.state.activeElement == "Light") {
+            points = 2;
+        } else if (this.state.activeElement == "Medium") {
             points = 4;
-        } else if(this.state.activeElement == "High") {
+        } else if (this.state.activeElement == "High") {
             points = 6;
-        }else if(this.state.activeElement == "Intense") {
+        } else if (this.state.activeElement == "Intense") {
             points = 8;
         }
         return this.props.previousLogs + points
@@ -61,25 +61,31 @@ class MyWorkouts extends React.Component {
             <form className="mainContainer" onSubmit={(event) => {
                 this.submitworkOut(event)
             }}>
-                <div>
-                    <StoryBoard />
-                </div>
-
+                <StoryBoard/>
                 <div className="workoutContainer progress">
-                    <div> {this.props.displayName} Log your workout </div>
+                    <div> {this.props.displayName} Log your workout to reach the goal of 400 Points</div>
                     <br></br>
-                    <CircularProgressbar value={this.props.previousLogs} maxValue={100}
-                                         text={`${this.props.previousLogs}%`}/></div>
+                    <CircularProgressbar value={this.props.previousLogs / 400 * 100} maxValue={100}
+                                         text={`${this.props.previousLogs / 400 * 100}%`}/></div>
                 {imageDisplayer}
                 <div>
-                    <input type="button" value="Light" onClick={(event)=> {this.highLightSelected(event)}}/>
-                    <input type="button" value="Medium" onClick={(event)=> {this.highLightSelected(event)}}/>
-                    <input type="button" value="High" onClick={(event)=> {this.highLightSelected(event)}}/>
-                    <input type="button" value="Intense" onClick={(event)=> {this.highLightSelected(event)}}/>
+                    <input type="button" value="Light" className={this.state.activeElement == "Light" ? "active logWorkButton" : "logWorkButton"} onClick={(event) => {
+                        this.highLightSelected(event)
+                    }}/>
+                    <input type="button" value="Medium" className={this.state.activeElement == "Medium" ? "active logWorkButton" : "logWorkButton"} onClick={(event) => {
+                        this.highLightSelected(event)
+                    }}/>
+                    <input type="button" value="High" className={this.state.activeElement == "High" ? "active logWorkButton" : "logWorkButton"} onClick={(event) => {
+                        this.highLightSelected(event)
+                    }}/>
+                    <input type="button" value="Intense" className={this.state.activeElement == "Intense" ? "active logWorkButton" : "logWorkButton"} onClick={(event) => {
+                        this.highLightSelected(event)
+                    }}/>
                 </div>
 
                 <div className="workoutContainer buttonContainer">
-                    <input type="submit" className="logWorkButton" value="LOG YOUR EFFORTS" disabled={this.submitButtonStatus()}/>
+                    <input type="submit" className="logWorkButton" value="LOG YOUR EFFORTS"
+                           disabled={this.submitButtonStatus()}/>
                 </div>
 
             </form>

@@ -185,11 +185,15 @@ body {
     font-style: normal;
     letter-spacing: 2px;
     font-weight: 700;
+    min-width: 200px;
+    margin: 3px 4px;
 }
 
 
+
+
+
 .logWorkButton:hover {
-    background: rgba(0, 0, 0, 0.4); /* #101010 */
     cursor: pointer;
     transition: all 0.4s ease 0s;
     transform: scale(1.04);
@@ -204,8 +208,31 @@ body {
 
 .mainContainer {
     position: relative;
-    top: -20px;
-    z-index: 0;
 }
 
 /************** END:::: Progress bar ::::: END ***********/
+
+
+
+
+/************** START:::: STORY BOARD::::: START ***********/
+.storyBoard {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-top: 20px;
+    border: 1px solid;
+    background: linear-gradient(90deg,#f1f1f1,#77abcc);
+    border-radius: 10px;
+    padding-right: 25px;
+    color: black;
+}
+
+.mainContainer {
+    position: relative;
+}
+
+/************** END:::: STORY BOARD ::::: END ***********/
+
+.active {
+    background: linear-gradient(#56e95c,#11191e);
+}
