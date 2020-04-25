@@ -42,3 +42,22 @@ export function getPreviousLogs() {
     }
 }
 
+export function getStoryBoard() {
+    return (dispatch) => {
+        return firebaseTrigger.getStoryBoard()
+            .then((result) => {
+                //dispatch(notify('Your quiz has been submitted successfully'));
+                dispatch({
+                    type: "STORY_BOARD",
+                    payload: {
+                        storyBoard: result
+                    }
+                });
+            })
+            .catch(error => {
+                // dispatch(loginCallError(error));
+                console.log(error);
+            });
+    }
+}
+

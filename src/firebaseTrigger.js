@@ -16,36 +16,19 @@ class FirebaseTrigger {
             );
         });
     }
-
-    static submitLog(workoutLog, previousLogs) {
-
-        const addLogs = () => {
-
-            if(previousLogs) {
-                let sum = workoutLogUpdated.map((num, i) => {
-                    return  parseInt(num) + parseInt(previousLogs[i])
-                })
-
-                return sum;
-            }
-            else {
-                return workoutLog
-            }
-        }
+    static submitLog(workoutLog) {
 
         let user = firebase.auth().currentUser;
-        let workoutLogUpdated = [...workoutLog];
+        let displayName = user.displayName;
         console.log("Inside the submit log");
         console.log(user);
         console.log(user.email);
-
-        let finalLogs = addLogs();
 
 
         return new Promise((resolve, reject) => {
             firebase
                 .database()
-                .ref("users").child(user.uid).update(finalLogs, (error) => {
+                .ref('users/progress').child(`${displayName}`).update([{name : displayName , points: workoutLog}], (error) => {
                 if (error) {
                     reject(error);
                 } else {
@@ -55,6 +38,36 @@ class FirebaseTrigger {
             });
         });
     }
+
+    static getPreviousLogs() {
+        let user = firebase.auth().currentUser;
+        let displayName = user.displayName;
+        console.log(user);
+        return new Promise((resolve, reject) => {
+            firebase.database().ref(`users/progress/${displayName}`)
+                .on('value', function (snapshot) {
+                    let resolvedValues = [];
+                    resolvedValues.push(snapshot.val());
+                    resolvedValues.push(user.displayName)
+                    resolve(resolvedValues)
+                });
+        })
+    }
+
+    static getStoryBoard() {
+        let user = firebase.auth().currentUser;
+        let displayName = user.displayName;
+        console.log(user);
+        return new Promise((resolve, reject) => {
+            firebase.database().ref(`users/progress/`)
+                .on('value', function (snapshot) {
+                    resolve(snapshot.val())
+                });
+        })
+    }
+
+
+    /*
 
     static getPreviousLogs(workoutLog) {
         let user = firebase.auth().currentUser;
@@ -69,6 +82,52 @@ class FirebaseTrigger {
                 });
         })
     }
+
+*/
+
+
+
+    /* static submitLog(workoutLog, previousLogs) {
+
+         const addLogs = () => {
+
+             if(previousLogs) {
+                 let sum = workoutLogUpdated.map((num, i) => {
+                     return  parseInt(num) + parseInt(previousLogs[i])
+                 })
+
+                 return sum;
+             }
+             else {
+                 return workoutLog
+             }
+         }
+
+         let user = firebase.auth().currentUser;
+         let workoutLogUpdated = [...workoutLog];
+         console.log("Inside the submit log");
+         console.log(user);
+         console.log(user.email);
+
+         let finalLogs = addLogs();
+
+
+         return new Promise((resolve, reject) => {
+             firebase
+                 .database()
+                 .ref("users").child(user.uid).update(finalLogs, (error) => {
+                 if (error) {
+                     reject(error);
+                 } else {
+                     console.log("data set correctly");
+                     resolve("success");
+                 }
+             });
+         });
+     }*/
+
+
+
 }
 export default FirebaseTrigger;
 

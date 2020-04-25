@@ -3,141 +3,83 @@ import {connect} from 'react-redux'
 import withRedirectOnNotAuth from '../../hocs/withRedirectOnNotAuth';
 import {CircularProgressbar} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-
-
 import {bindActionCreators} from 'redux';
-import {submitLog, getPreviousLogs} from '../../ducks/app/actions';
+import {submitLog, getPreviousLogs,getStoryBoard} from '../../ducks/app/actions';
+import imageDisplayer from "../../components/imageDisplayer";
+import StoryBoard from '../StoryBoard'
 
 class MyWorkouts extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            "plank": 0,
-            "pushUp": 0,
-            "sidePlank": 0,
-            "sidePlankRise": 0,
-            "squats": 0,
-            "toeTouch": 0,
-            "wallSit": 0,
-            "progress": 0
+           "activeElement" : ""
         }
         this.submitworkOut = this.submitworkOut.bind(this);
     }
 
     componentDidMount() {
         this.props.actions.getPreviousLogs();
+        this.props.actions.getStoryBoard();
     }
 
+    submitButtonStatus() {
+        return this.state.activeElement ? false : true
+    }
 
-    handleChange(event) {
-        this.setState({[event.target.id]: event.target.value})
+    highLightSelected(event) {
+        event.preventDefault();
+        this.setState({activeElement: event.target.value});
+    }
+
+    calculateFinalLogs() {
+        let points = 0;
+        if(this.state.activeElement == "Light"){
+            points =2;
+        } else if(this.state.activeElement == "Medium") {
+            points = 4;
+        } else if(this.state.activeElement == "High") {
+            points = 6;
+        }else if(this.state.activeElement == "Intense") {
+            points = 8;
+        }
+        return this.props.previousLogs + points
     }
 
     submitworkOut(event) {
         event.preventDefault();
-        let logArray = [this.state.pushUp, this.state.plank, this.state.sidePlank, this.state.sidePlankRise,
-            this.state.squats, this.state.toeTouch, this.state.wallSit];
-
-        if (Array.isArray(this.props.previousLogs)) {
-            this.props.actions.submitLog(logArray, this.props.previousLogs);
-        } else {
-            this.props.actions.submitLog(logArray);
-        }
-
+        let logArray = this.state.activeElement;
+        this.calculateFinalLogs();
+        this.props.actions.submitLog(this.calculateFinalLogs());
         this.props.actions.getPreviousLogs();
-        this.setState({plank:0,pushUp:0,sidePlank:0,sidePlankRise:0,squats:0,toeTouch:0,wallSit:0,progress:0})
+        this.setState({activeElement: ""})
 
     }
 
-
     render() {
-        let progressL = 0;
-        const calculateProgress = () => {
-            if(Array.isArray(this.props.previousLogs)) {
-                let prevLogs = [...this.props.previousLogs]
-                if (prevLogs && Array.isArray(prevLogs) && prevLogs.length == 7) {
-                    const arrSum = arr => arr.reduce((a, b) => parseInt(a) + parseInt(b), 0)
-                    progressL = arrSum(prevLogs) / 10;
-                }
-            }
-            return progressL
-        }
-
-        console.log("inside the render of my workouts");
         console.log(this.props);
-
         return (
             <form className="mainContainer" onSubmit={(event) => {
                 this.submitworkOut(event)
             }}>
-                {calculateProgress()}
-
+                <div>
+                    <StoryBoard />
+                </div>
 
                 <div className="workoutContainer progress">
                     <div> {this.props.displayName} Log your workout </div>
                     <br></br>
-                    <CircularProgressbar value={progressL} maxValue={100}
-                                         text={`${progressL}%`}/></div>
-                <div className="workoutContainer">
-                    <img className="imageContainer" src={require('../../images/pushUp.jpg')}/>
-                    <input type="number" min="0" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
-                           value={this.state.pushUp}
-                           id="pushUp"/>
-                    <label for="pushUp"> Total Pushups</label>
-                </div>
-
-                <div className="workoutContainer">
-                    <img className="imageContainer" src={require('../../images/plank.jpg')}/>
-                    <input type="number" min="0" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
-                           value={this.state.plank}
-                           id="plank"/>
-                    <label for="plank"> Minutes </label>
-                </div>
-
-
-                <div className="workoutContainer">
-                    <img className="imageContainer" src={require('../../images/sidePlank.jpg')}/>
-                    <input type="number" min="0" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
-                           value={this.state.sidePlank}
-                           id="sidePlank"/>
-                    <label for="sidePlank"> Minutes</label>
-
-                </div>
-
-                <div className="workoutContainer">
-                    <img className="imageContainer" src={require('../../images/sidePlankRise.jpg')}/>
-                    <input type="number" min="0" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
-                           value={this.state.sidePlankRise}
-                           id="sidePlankRise"/>
-                    <label for="sidePlankRise"> Minutes</label>
-                </div>
-
-                <div className="workoutContainer">
-                    <img className="imageContainer" src={require('../../images/squats.jpg')}/>
-                    <input type="number" min="0" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
-                           value={this.state.squats}
-                           id="squats"/>
-                    <label htmlFor="squats"> Total squats</label>
-                </div>
-
-                <div className="workoutContainer">
-                    <img className="imageContainer" src={require('../../images/toeTouch.jpg')}/>
-                    <input type="number" min="0" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
-                           value={this.state.toeTouch}
-                           id="toeTouch"/>
-                    <label htmlFor="toeTouch"> Total Toe touches</label>
-                </div>
-
-                <div className="workoutContainer">
-                    <img className="imageContainer" src={require('../../images/wallSit.jpg')}/>
-                    <input type="number" min="0" className="workoutInputValue" onChange={(event) => this.handleChange(event)}
-                           value={this.state.wallSit}
-                           id="wallSit"/>
-                    <label for="wallSit"> Minutes</label>
+                    <CircularProgressbar value={this.props.previousLogs} maxValue={100}
+                                         text={`${this.props.previousLogs}%`}/></div>
+                {imageDisplayer}
+                <div>
+                    <input type="button" value="Light" onClick={(event)=> {this.highLightSelected(event)}}/>
+                    <input type="button" value="Medium" onClick={(event)=> {this.highLightSelected(event)}}/>
+                    <input type="button" value="High" onClick={(event)=> {this.highLightSelected(event)}}/>
+                    <input type="button" value="Intense" onClick={(event)=> {this.highLightSelected(event)}}/>
                 </div>
 
                 <div className="workoutContainer buttonContainer">
-                    <input type="submit" class="logWorkButton" value="LOG YOUR EFFORTS"/>
+                    <input type="submit" className="logWorkButton" value="LOG YOUR EFFORTS" disabled={this.submitButtonStatus()}/>
                 </div>
 
             </form>
@@ -149,40 +91,20 @@ const mapDispatchToProps = (dispatch) => {
     return {
         actions: bindActionCreators({
             submitLog,
-            getPreviousLogs
+            getPreviousLogs,
+            getStoryBoard
         }, dispatch)
     };
 }
 
-//const mapStateToProps = ({firebase: {auth}}) => ({auth})
-
-
 const mapStateToProps = (state) => {
-    console.log("inside the state");
-    console.log(state)
     return {
         didDoSomething: state.app.didDoSomething,
         previousLogs: state.app.previousLogs,
-        displayName: state.app.displayName
+        displayName: state.app.displayName,
+        storyBoard: state.app.storyBoard
     };
 }
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRedirectOnNotAuth(MyWorkouts))
-
-
-/* handleChange(event, i) {
- console.log("inside the handler");
- this.setState({[i]: event.target.value})
-}*/
-/*render() {
-    const listItems = this.props.listOfWorkouts.map((i) =>
-        <div className="workoutContainer">
-            <img className="imageContainer" src={require(`../../images/${i}.jpg`)}/>
-            <input className="workoutInputValue" type="text" id= {i} onChange={(event, i) => this.handleChange(event)} />
-        </div>
-    );
-    return <div className="mainContainer">
-              {listItems}
-    </div>
-}*/
